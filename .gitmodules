@@ -1,0 +1,3 @@
+[submodule "Roingine"]
+	path = deps/Roingine
+	url = git@github.com:JohnyTheCarrot/Roingine.git
