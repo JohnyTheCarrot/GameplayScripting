@@ -24,7 +24,7 @@ function Init() {
 }
 
 function eat() {
-    script.callCpp("foodEaten");
+    roingine.fireEvent("foodEaten");
 
     const randomLocation = pickRandomLocation();
     transform.setLocalPosition(randomLocation.x, randomLocation.y);

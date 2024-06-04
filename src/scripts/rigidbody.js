@@ -12,7 +12,7 @@ function Init() {
 function FixedUpdate() {
     if (script.properties.affectedByGravity) {
         script.properties.speedY -= GRAVITY * roingine.FIXED_UPDATE_DELTATIME;
-        script.properties.speedY = utils.max(script.properties.speedY, script.properties.terminalVelocity);
+        script.properties.speedY = script.properties.speedY;
     }
 }
 
@@ -26,6 +26,5 @@ function Update() {
 script.properties = {
     speedX: 0,
     speedY: 0,
-    terminalVelocity: -250,
     affectedByGravity: true,
 };

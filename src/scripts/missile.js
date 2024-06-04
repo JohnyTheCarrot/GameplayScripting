@@ -8,12 +8,14 @@ var maxSpeed;
 const RADIUS = 100;
 
 var missileSpeed = 0;
-var targetPos = {
-    x: 50,
-    y: 50,
-}
 
 var transform;
+var playerGameObject;
+var playerTransform;
+
+function incrementSpeed() {
+    missileSpeed = utils.min(missileSpeed + 10, maxSpeed);
+}
 
 function Init() {
     maxSpeed = utils.randomRange(10, 150);
@@ -23,11 +25,18 @@ function Init() {
     current.addComponent("Rect", MISSILE_SIZE, MISSILE_SIZE);
     current.addComponent("RectRenderer");
     current.addComponent("RectCollider", MISSILE_SIZE, MISSILE_SIZE);
+
+    script.setEventListener("foodEaten", incrementSpeed);
 }
 
 function FixedUpdate() {
+    if (!playerTransform)
+        return;
+
     const worldPos = transform.getWorldPosition();
     var speed = missileSpeed * roingine.FIXED_UPDATE_DELTATIME;
+    const targetPos = playerTransform.getWorldPosition();
+
     const distance = Math.sqrt((worldPos.x - targetPos.x) ** 2 + (worldPos.y - targetPos.y) ** 2);
     const xFactor = -(worldPos.x - targetPos.x) / distance;
     const yFactor = -(worldPos.y - targetPos.y) / distance;
@@ -43,16 +52,16 @@ function FixedUpdate() {
         transform.translate(0, speed * yFactor);
 }
 
-function setTargetPos(x, y) {
-    targetPos.x = x;
-    targetPos.y = y;
-}
+function setPlayerGameObject(hPlayer) {
+    playerGameObject = scene.getGameObject(hPlayer);
+    if (!playerGameObject)
+        throw new Error("Player gameobject not found");
 
-function incrementSpeed() {
-    missileSpeed = utils.min(missileSpeed + 10, maxSpeed);
+    playerTransform = playerGameObject.getComponent("Transform");
+    if (!playerTransform)
+        throw new Error("Player transform not found");
 }
 
 script.api = {
-    setTargetPos,
-    incrementSpeed,
+    setPlayerGameObject,
 };

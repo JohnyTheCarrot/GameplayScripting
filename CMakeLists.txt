@@ -5,13 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 FILE(GLOB Scripts src/scripts/*.js)
+FILE(GLOB Scenes scenes/*.json)
 add_executable(${PROJECT_NAME}
 	src/main.cpp
-	src/components/rigidbody.h
-	src/components/rigidbody.cpp
-	src/non_null.h
 
 	${Scripts}
+	${Scenes}
 )
 
 include(FetchContent)
@@ -19,7 +18,7 @@ include(FetchContent)
 FetchContent_Declare(
 	Roingine
 	GIT_REPOSITORY	https://github.com/JohnyTheCarrot/Roingine.git
-	GIT_TAG 		6a42397ff24b8a24d8fc196ef348b5b010eeabba
+	GIT_TAG 		b98374dd9debe30689c615f9ba11435c19dde995
 	GIT_SHALLOW TRUE
 )
 
@@ -109,11 +108,13 @@ else ()
 endif ()
 
 # add post build commands
-message(STATUS "Scripts -> ${Scripts}")
 foreach(script ${Scripts})
 	get_filename_component(FILENAME "${script}" NAME_WLE)
-	message(STATUS ${FILENAME})
 	configure_file(${script} "scripts/${FILENAME}.js" COPYONLY)
+endforeach()
+foreach(scene ${Scenes})
+	get_filename_component(FILENAME "${scene}" NAME_WLE)
+	configure_file(${scene} "scenes/${FILENAME}.json" COPYONLY)
 endforeach()
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

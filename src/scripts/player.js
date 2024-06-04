@@ -2,9 +2,11 @@ const SCRIPT_NAME = "Player";
 
 var rigidbody;
 
-const INFLATE_ACCELERATION = 10;
+const FLY_SPEED = 10;
+const DEFLATE_SPEED = 20;
 const MOVEMENT_SPEED = 20;
 const MAX_FLY_SPEED = 500;
+const MAX_FALL_SPEED = 500;
 const PLAYER_SIZE = 50;
 
 const utils = require("utils.js");
@@ -14,7 +16,14 @@ var transform;
 input.onKeyHeld(input.KEY_SPACE, function () {
     const currentSpeed = rigidbody.getProperty("speedY");
 
-    rigidbody.setProperty("speedY", utils.min(currentSpeed + INFLATE_ACCELERATION, MAX_FLY_SPEED));
+    rigidbody.setProperty("speedY", utils.min(currentSpeed + FLY_SPEED, MAX_FLY_SPEED));
+});
+
+input.onKeyHeld(input.KEY_S, function () {
+    const currentSpeed = rigidbody.getProperty("speedY");
+
+    rigidbody.setProperty("speedY", utils.max(currentSpeed - DEFLATE_SPEED, -MAX_FALL_SPEED));
+    roingine.println(rigidbody.getProperty("speedY"));
 });
 
 input.onKeyHeld(input.KEY_A, function () {
@@ -29,7 +38,17 @@ input.onKeyHeld(input.KEY_D, function () {
     rigidbody.setProperty("speedX", utils.min(currentSpeed + MOVEMENT_SPEED, MAX_FLY_SPEED));
 });
 
-function Init() {
+function die() {
+    roingine.print("======================\n")
+    roingine.print("\n");
+    roingine.print("You died\n");
+    roingine.print("\n");
+    roingine.println("======================")
+    roingine.fireEvent("playerDied");
+    scene.load("scenes/main.json");
+}
+
+function Init(hMissileManager) {
     transform = current.addComponent("Transform", 100, 100);
     current.addComponent("Rect", PLAYER_SIZE, PLAYER_SIZE);
     current.addComponent("RectRenderer");
@@ -46,12 +65,7 @@ function Init() {
             if (!missileScript)
                 return;
 
-            roingine.print("======================\n")
-            roingine.print("\n");
-            roingine.print("You died\n");
-            roingine.print("\n");
-            roingine.println("======================")
-            script.callCpp("die");
+            die();
             return;
         }
 
@@ -61,11 +75,12 @@ function Init() {
     var scripts = current.getComponent("Scripts");
     scripts.addScript("scripts/rigidbody.js");
     rigidbody = scripts.getScript("Rigidbody");
+    const missileManagerObject = scene.getGameObject(hMissileManager);
+    const missileManager = missileManagerObject.getComponent("Scripts").getScript("MissileManager");
+    missileManager.callMethod("setPlayerGameObject", current.handle);
 }
 
 function Update() {
-    script.callCpp("updateMissilePositions");
-
     var worldPos = transform.getWorldPosition();
     var newPos = worldPos;
 

@@ -1,0 +1,40 @@
+{
+	"name": "Main",
+	"objects": [
+		{
+			"components": [
+				{
+					"name": "Script",
+					"args": ["scripts/score_tracker.js"]
+				}
+			]
+		},
+		{
+			"label": "__food_manager",
+			"components": [
+				{
+					"name": "Script",
+					"args": ["scripts/food_manager.js", 10]
+				}
+			]
+		},
+		{
+			"label": "__missile_manager",
+			"components": [
+				{
+					"name": "Script",
+					"args": ["scripts/missile_manager.js"]
+				}
+			]
+		},
+		{
+			"label": "__player",
+			"components": [
+				{
+					"name": "Script",
+					"args": ["scripts/player.js", "__missile_manager"]
+				}
+			]
+		}
+	]
+}
