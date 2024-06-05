@@ -23,7 +23,8 @@ function Init() {
 
     transform = current.addComponent("Transform", -MISSILE_SIZE, -MISSILE_SIZE);
     current.addComponent("Rect", MISSILE_SIZE, MISSILE_SIZE);
-    current.addComponent("RectRenderer");
+    var renderer = current.addComponent("RectRenderer");
+    renderer.setColor(0xd83a3a);
     current.addComponent("RectCollider", MISSILE_SIZE, MISSILE_SIZE);
 
     script.setEventListener("foodEaten", incrementSpeed);

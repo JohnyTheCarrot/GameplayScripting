@@ -13,17 +13,19 @@ const utils = require("utils.js");
 
 var transform;
 
-input.onKeyHeld(input.KEY_SPACE, function () {
+function inflate() {
     const currentSpeed = rigidbody.getProperty("speedY");
 
     rigidbody.setProperty("speedY", utils.min(currentSpeed + FLY_SPEED, MAX_FLY_SPEED));
-});
+}
+
+input.onKeyHeld(input.KEY_SPACE, inflate);
+input.onKeyHeld(input.KEY_W, inflate);
 
 input.onKeyHeld(input.KEY_S, function () {
     const currentSpeed = rigidbody.getProperty("speedY");
 
     rigidbody.setProperty("speedY", utils.max(currentSpeed - DEFLATE_SPEED, -MAX_FALL_SPEED));
-    roingine.println(rigidbody.getProperty("speedY"));
 });
 
 input.onKeyHeld(input.KEY_A, function () {
