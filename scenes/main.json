@@ -10,15 +10,6 @@
 			]
 		},
 		{
-			"uid": "__food_manager",
-			"components": [
-				{
-					"name": "Script",
-					"args": ["scripts/food_manager.js", 10]
-				}
-			]
-		},
-		{
 			"uid": "__missile_manager",
 			"components": [
 				{
@@ -33,6 +24,15 @@
 				{
 					"name": "Script",
 					"args": ["scripts/player.js", "__missile_manager"]
+				}
+			]
+		},
+		{
+			"uid": "__food_manager",
+			"components": [
+				{
+					"name": "Script",
+					"args": ["scripts/food_manager.js", 10, "__player"]
 				}
 			]
 		}

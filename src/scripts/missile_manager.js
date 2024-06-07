@@ -15,7 +15,7 @@ function spawnMissile() {
 
 function Init() {
     spawnMissile();
-    script.setEventListener("scoreChanged", function(score) {
+    script.setEventListener("scoreChanged", function(score, deltaScore) {
         if (score % 10 == 0)
             spawnMissile();
     });

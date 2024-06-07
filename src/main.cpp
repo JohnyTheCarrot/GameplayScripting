@@ -28,6 +28,7 @@ int main() {
 				gotNewHighScore = true;
 				highScore       = scoreInt;
 			}
+			std::cout << "Score: " << score << std::endl;
 			return;
 		}
 

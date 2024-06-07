@@ -70,6 +70,13 @@ function Init(hMissileManager) {
             return;
         }
 
+        if (other.hasLabel("GoldenFood")) {
+            var foodScript = scripts.getScript('GoldenFood');
+
+            foodScript.callMethod("eat");
+            return;
+        }
+
         if (other.hasLabel("Missile")) {
             die();
             return;
