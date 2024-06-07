@@ -10,7 +10,7 @@
 			]
 		},
 		{
-			"label": "__food_manager",
+			"uid": "__food_manager",
 			"components": [
 				{
 					"name": "Script",
@@ -19,7 +19,7 @@
 			]
 		},
 		{
-			"label": "__missile_manager",
+			"uid": "__missile_manager",
 			"components": [
 				{
 					"name": "Script",
@@ -28,7 +28,7 @@
 			]
 		},
 		{
-			"label": "__player",
+			"uid": "__player",
 			"components": [
 				{
 					"name": "Script",

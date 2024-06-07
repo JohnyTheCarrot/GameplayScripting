@@ -1,4 +1,5 @@
 const SCRIPT_NAME = "Player";
+const CAN_DROP = true;
 
 var rigidbody;
 
@@ -23,6 +24,8 @@ input.onKeyHeld(input.KEY_SPACE, inflate);
 input.onKeyHeld(input.KEY_W, inflate);
 
 input.onKeyHeld(input.KEY_S, function () {
+    if (!CAN_DROP) return;
+
     const currentSpeed = rigidbody.getProperty("speedY");
 
     rigidbody.setProperty("speedY", utils.max(currentSpeed - DEFLATE_SPEED, -MAX_FALL_SPEED));
@@ -52,8 +55,7 @@ function die() {
 
 function Init(hMissileManager) {
     transform = current.addComponent("Transform", 100, 100);
-    current.addComponent("Rect", PLAYER_SIZE, PLAYER_SIZE);
-    current.addComponent("RectRenderer");
+    current.addComponent("RectRenderer", PLAYER_SIZE, PLAYER_SIZE);
 
     var collider = current.addComponent("RectCollider", PLAYER_SIZE, PLAYER_SIZE);
     collider.onCollision(function(other) {
@@ -61,17 +63,17 @@ function Init(hMissileManager) {
         if (!scripts)
             return;
 
-        var foodScript = scripts.getScript("Food");
-        if (!foodScript) {
-            var missileScript = scripts.getScript('Missile');
-            if (!missileScript)
-                return;
+        if (other.hasLabel("Food")) {
+            var foodScript = scripts.getScript('Food');
 
-            die();
+            foodScript.callMethod("eat");
             return;
         }
 
-        foodScript.callMethod("eat");
+        if (other.hasLabel("Missile")) {
+            die();
+            return;
+        }
     });
 
     var scripts = current.getComponent("Scripts");

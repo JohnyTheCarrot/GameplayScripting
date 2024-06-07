@@ -7,6 +7,9 @@
 #include <roingine/scene_manager.h>
 
 int main() {
+	std::cout << "Left: A; Right: D; Fly: Space; Drop: S. Goal is to get as many points as possible by eating food."
+	          << std::endl;
+
 	roingine::Engine roingine{"Gameplay Scripting", 800, 600};
 	roingine::KeyboardInput::Provide(std::make_unique<roingine::SDLKeyboardInputService>());
 

@@ -6,6 +6,7 @@ const MISSILE_SIZE = 20;
 var maxSpeed;
 
 const RADIUS = 100;
+const TIME_BEFORE_ACTIVE_SEC = 1;
 
 var missileSpeed = 0;
 
@@ -22,10 +23,10 @@ function Init() {
     roingine.println("Spawning missile with a max speed of", maxSpeed);
 
     transform = current.addComponent("Transform", -MISSILE_SIZE, -MISSILE_SIZE);
-    current.addComponent("Rect", MISSILE_SIZE, MISSILE_SIZE);
-    var renderer = current.addComponent("RectRenderer");
+    var renderer = current.addComponent("RectRenderer", MISSILE_SIZE, MISSILE_SIZE);
     renderer.setColor(0xd83a3a);
     current.addComponent("RectCollider", MISSILE_SIZE, MISSILE_SIZE);
+    current.setLabel("Missile");
 
     script.setEventListener("foodEaten", incrementSpeed);
 }

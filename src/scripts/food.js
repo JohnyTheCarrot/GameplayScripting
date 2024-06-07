@@ -18,9 +18,9 @@ function Init() {
     const randomLocation = pickRandomLocation();
 
     transform = current.addComponent("Transform", randomLocation.x, randomLocation.y);
-    current.addComponent("Rect", FOOD_SIZE, FOOD_SIZE);
-    current.addComponent("RectRenderer");
+    current.addComponent("RectRenderer", FOOD_SIZE, FOOD_SIZE);
     current.addComponent("RectCollider", FOOD_SIZE, FOOD_SIZE);
+    current.setLabel("Food");
 }
 
 function eat() {
